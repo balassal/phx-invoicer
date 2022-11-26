@@ -1,0 +1,57 @@
+<div class="drawer drawer-mobile">
+  <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
+  <div class="drawer-content p-2">
+    <div class="navbar bg-base-200 rounded-lg shadow-xl lg:hidden">
+      <div class="flex-none">
+        <label for="my-drawer-2" class="btn btn-square btn-ghost">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-5 h-5 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+        </label>
+      </div>
+      <div class="flex-1">
+        <a class="btn btn-ghost normal-case text-xl">daisyUI</a>
+      </div>
+    </div>
+    <main>
+      <.flash kind={:info} title="Success!" flash={@flash} />
+      <.flash kind={:error} title="Error!" flash={@flash} />
+      <.flash
+        id="disconnected"
+        kind={:error}
+        title="We can't find the internet"
+        close={false}
+        autoshow={false}
+        phx-disconnected={show("#disconnected")}
+        phx-connected={hide("#disconnected")}
+      >
+        Attempting to reconnect <Heroicons.arrow_path class="ml-1 w-3 h-3 inline animate-spin" />
+      </.flash>
+      <%= @inner_content %>
+    </main>
+
+  </div>
+  <div class="drawer-side">
+    <label for="my-drawer-2" class="drawer-overlay"></label>
+    <ul class="menu p-4 w-80 bg-base-100 text-base-content">
+      <.menu_item id="home_menu" to="/">
+        <:icon><Heroicons.home solid class="h-5 w-5" /></:icon>
+        Home
+      </.menu_item>
+      <.menu_item id="invoices_menu" to="/invoices">
+        <:icon><Heroicons.list_bullet solid class="h-5 w-5" /></:icon>
+        Invoices
+      </.menu_item>
+      <.menu_item id="partners_menu" to="/partners">
+        <:icon><Heroicons.users solid class="h-5 w-5" /></:icon>
+        Partners
+      </.menu_item>
+      <.menu_item id="products_menu" to="/products">
+        <:icon><Heroicons.archive_box solid class="h-5 w-5" /></:icon>
+        Products
+      </.menu_item>
+      <.menu_item id="settings_menu" to="/settings">
+        <:icon><Heroicons.adjustments_vertical solid class="h-5 w-5" /></:icon>
+        Settings
+      </.menu_item>
+    </ul>
+  </div>
+</div>
