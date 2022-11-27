@@ -24,11 +24,11 @@ For creating invoices, we need some other operations, like managing products, pa
 - [ ] Company
   - [ ] Addresses
   - [ ] Bank accounts
-- [ ] Unit of measure
-  - [ ] Listing
-  - [ ] Create uom
-  - [ ] Modify uom
-  - [ ] Delete uom
+- [x] Unit of measure
+  - [x] Listing
+  - [x] Create uom
+  - [x] Modify uom
+  - [x] Delete uom
 - [ ] Taxes
   - [ ] Listing
   - [ ] Create tax
