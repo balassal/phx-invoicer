@@ -1,0 +1,26 @@
+<.back navigate={~p"/settings/uoms"}>Back</.back>
+<.header>
+  Uom <%= @uom.id %>
+  <:actions>
+    <.link patch={~p"/settings/uoms/#{@uom}/show/edit"} phx-click={JS.push_focus()}>
+      <.button>Edit uom</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Name"><%= @uom.name %></:item>
+  <:item title="Label"><%= @uom.label %></:item>
+</.list>
+
+
+<.modal :if={@live_action == :edit} id="uom-modal" show on_cancel={JS.patch(~p"/settings/uoms/#{@uom}")}>
+  <.live_component
+    module={InvoicerWeb.UomLive.FormComponent}
+    id={@uom.id}
+    title={@page_title}
+    action={@live_action}
+    uom={@uom}
+    navigate={~p"/settings/uoms/#{@uom}"}
+  />
+</.modal>

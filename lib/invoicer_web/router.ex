@@ -24,6 +24,13 @@ defmodule InvoicerWeb.Router do
     pipe_through :browser
 
     live "/", Pages.SettingsLive
+
+    live "/uoms", UomLive.Index, :index
+    live "/uoms/new", UomLive.Index, :new
+    live "/uoms/:id/edit", UomLive.Index, :edit
+
+    live "/uoms/:id", UomLive.Show, :show
+    live "/uoms/:id/show/edit", UomLive.Show, :edit
   end
 
   # Other scopes may use custom stacks.
