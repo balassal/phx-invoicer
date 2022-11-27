@@ -5,7 +5,7 @@ defmodule InvoicerWeb.UomLive.Show do
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, socket}
+    {:ok, socket, layout: {InvoicerWeb.Layouts, :settings}}
   end
 
   @impl true

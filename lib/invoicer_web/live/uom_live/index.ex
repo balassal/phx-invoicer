@@ -6,7 +6,7 @@ defmodule InvoicerWeb.UomLive.Index do
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, assign(socket, :uoms, list_uoms())}
+    {:ok, assign(socket, :uoms, list_uoms()), layout: {InvoicerWeb.Layouts, :settings}}
   end
 
   @impl true
