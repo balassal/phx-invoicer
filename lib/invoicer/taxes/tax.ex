@@ -6,7 +6,7 @@ defmodule Invoicer.Taxes.Tax do
   @foreign_key_type :binary_id
   schema "taxes" do
     field :active, :boolean, default: false
-    field :amount, :float
+    field :amount, :decimal
     field :category, :string
     field :computation, :string
     field :included, :boolean, default: false
