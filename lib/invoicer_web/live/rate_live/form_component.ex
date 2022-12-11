@@ -20,8 +20,8 @@ defmodule InvoicerWeb.RateLive.FormComponent do
         phx-change="validate"
         phx-submit="save"
       >
-        <.input field={{f, :date}} type="datetime-local" label="date" />
-        <.input field={{f, :exchange}} type="number" label="exchange" step="any" />
+        <.input field={{f, :date}} type="date" label="Date" />
+        <.input field={{f, :exchange}} type="number" label="Exchange Rate" step="any" />
         <:actions>
           <.button phx-disable-with="Saving...">Save Rate</.button>
         </:actions>

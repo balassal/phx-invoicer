@@ -13,7 +13,7 @@
   <:item title="Exchange"><%= @rate.exchange %></:item>
 </.list>
 
-<.back navigate={~p"/settings/rates"}>Back to rates</.back>
+<.back navigate={~p"/settings/rates"} class="mt-4">Back to rates</.back>
 
 <.modal :if={@live_action == :edit} id="rate-modal" show on_cancel={JS.patch(~p"/settings/rates/#{@rate}")}>
   <.live_component

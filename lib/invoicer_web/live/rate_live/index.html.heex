@@ -14,11 +14,19 @@
     <div class="sr-only">
       <.link navigate={~p"/settings/rates/#{rate}"}>Show</.link>
     </div>
-    <.link patch={~p"/settings/rates/#{rate}/edit"}>Edit</.link>
+    <.link patch={~p"/settings/rates/#{rate}/edit"}>
+      <button type="button" class="btn btn-warning btn-sm">
+        <Heroicons.pencil solid class="h-5 w-5 mr-2" />
+        Edit
+      </button>
+    </.link>
   </:action>
   <:action :let={rate}>
     <.link phx-click={JS.push("delete", value: %{id: rate.id})} data-confirm="Are you sure?">
-      Delete
+      <button type="button" class="btn btn-error btn-sm">
+        <Heroicons.trash solid class="h-5 w-5 mr-2" />
+        Delete
+      </button>
     </.link>
   </:action>
 </.table>
