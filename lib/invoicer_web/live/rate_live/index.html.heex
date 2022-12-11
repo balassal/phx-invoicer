@@ -1,0 +1,40 @@
+<.header>
+  Listing Rates
+  <:actions>
+    <.link patch={~p"/settings/rates/new"}>
+      <.button>New Rate</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table id="rates" rows={@rates} row_click={&JS.navigate(~p"/settings/rates/#{&1}")}>
+  <:col :let={rate} label="Date"><%= rate.date %></:col>
+  <:col :let={rate} label="Exchange"><%= rate.exchange %></:col>
+  <:action :let={rate}>
+    <div class="sr-only">
+      <.link navigate={~p"/settings/rates/#{rate}"}>Show</.link>
+    </div>
+    <.link patch={~p"/settings/rates/#{rate}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={rate}>
+    <.link phx-click={JS.push("delete", value: %{id: rate.id})} data-confirm="Are you sure?">
+      Delete
+    </.link>
+  </:action>
+</.table>
+
+<.modal
+  :if={@live_action in [:new, :edit]}
+  id="rate-modal"
+  show
+  on_cancel={JS.navigate(~p"/settings/rates")}
+>
+  <.live_component
+    module={InvoicerWeb.RateLive.FormComponent}
+    id={@rate.id || :new}
+    title={@page_title}
+    action={@live_action}
+    rate={@rate}
+    navigate={~p"/settings/rates"}
+  />
+</.modal>

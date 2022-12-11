@@ -12,7 +12,7 @@ defmodule Invoicer.TaxesFixtures do
       attrs
       |> Enum.into(%{
         active: true,
-        amount: 120.5,
+        amount: "120.5",
         category: "some category",
         computation: "percentage",
         included: true,

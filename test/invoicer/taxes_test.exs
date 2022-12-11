@@ -25,7 +25,7 @@ defmodule Invoicer.TaxesTest do
 
       assert {:ok, %Tax{} = tax} = Taxes.create_tax(valid_attrs)
       assert tax.active == true
-      assert tax.amount == 120.5
+      assert tax.amount == Decimal.new("120.5")
       assert tax.category == "some category"
       assert tax.computation == "value"
       assert tax.included == true
@@ -44,7 +44,7 @@ defmodule Invoicer.TaxesTest do
 
       assert {:ok, %Tax{} = tax} = Taxes.update_tax(tax, update_attrs)
       assert tax.active == false
-      assert tax.amount == 456.7
+      assert tax.amount == Decimal.new("456.7")
       assert tax.category == "some updated category"
       assert tax.computation == "percentage"
       assert tax.included == false
