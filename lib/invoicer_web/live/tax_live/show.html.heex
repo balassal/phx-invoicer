@@ -1,0 +1,33 @@
+<.header>
+  Tax <%= @tax.id %>
+  <:subtitle>This is a tax record from your database.</:subtitle>
+  <:actions>
+    <.link patch={~p"/settings/taxes/#{@tax}/show/edit"} phx-click={JS.push_focus()}>
+      <.button>Edit tax</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Name"><%= @tax.name %></:item>
+  <:item title="Category"><%= @tax.category %></:item>
+  <:item title="Active"><%= @tax.active %></:item>
+  <:item title="Type"><%= @tax.type %></:item>
+  <:item title="Scope"><%= @tax.scope %></:item>
+  <:item title="Computation"><%= @tax.computation %></:item>
+  <:item title="Amount"><%= @tax.amount %></:item>
+  <:item title="Included"><%= @tax.included %></:item>
+</.list>
+
+<.back navigate={~p"/settings/taxes"} class="mt-4">Back to taxes</.back>
+
+<.modal :if={@live_action == :edit} id="tax-modal" show on_cancel={JS.patch(~p"/settings/taxes/#{@tax}")}>
+  <.live_component
+    module={InvoicerWeb.TaxLive.FormComponent}
+    id={@tax.id}
+    title={@page_title}
+    action={@live_action}
+    tax={@tax}
+    navigate={~p"/settings/taxes/#{@tax}"}
+  />
+</.modal>

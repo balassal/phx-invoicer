@@ -31,6 +31,13 @@ defmodule InvoicerWeb.Router do
 
     live "/uoms/:id", UomLive.Show, :show
     live "/uoms/:id/show/edit", UomLive.Show, :edit
+
+    live "/taxes", TaxLive.Index, :index
+    live "/taxes/new", TaxLive.Index, :new
+    live "/taxes/:id/edit", TaxLive.Index, :edit
+
+    live "/taxes/:id", TaxLive.Show, :show
+    live "/taxes/:id/show/edit", TaxLive.Show, :edit
   end
 
   # Other scopes may use custom stacks.

@@ -1,0 +1,58 @@
+<.header>
+  Listing Taxes
+  <:actions>
+    <.link patch={~p"/settings/taxes/new"}>
+      <.button>New Tax</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table id="taxes" rows={@taxes} row_click={&JS.navigate(~p"/settings/taxes/#{&1}")}>
+  <:col :let={tax} label="Name"><%= tax.name %></:col>
+  <:col :let={tax} label="Category"><%= tax.category %></:col>
+  <:col :let={tax} label="Active"><%= tax.active %></:col>
+  <:col :let={tax} label="Type"><%= tax.type %></:col>
+  <:col :let={tax} label="Scope"><%= tax.scope %></:col>
+  <:col :let={tax} label="Computation"><%= tax.computation %></:col>
+  <:col :let={tax} label="Amount"><%= tax.amount %></:col>
+  <:col :let={tax} label="Included"><%= tax.included %></:col>
+  <:action :let={tax}>
+    <div class="sr-only">
+      <.link navigate={~p"/settings/taxes/#{tax}"}>Show</.link>
+    </div>
+    <.link patch={~p"/settings/taxes/#{tax}/edit"}>
+      <div class="flex items-center">
+        <button type="button" class="btn btn-warning btn-sm">
+          <Heroicons.pencil solid class="h-5 w-5 mr-2" />
+          Edit
+        </button>
+      </div>
+    </.link>
+  </:action>
+  <:action :let={tax}>
+    <.link phx-click={JS.push("delete", value: %{id: tax.id})} data-confirm="Are you sure?">
+      <div class="flex items-center">
+        <button type="button" class="btn btn-error btn-sm">
+          <Heroicons.trash solid class="h-5 w-5 mr-2" />
+          Delete
+        </button>
+      </div>
+    </.link>
+  </:action>
+</.table>
+
+<.modal
+  :if={@live_action in [:new, :edit]}
+  id="tax-modal"
+  show
+  on_cancel={JS.navigate(~p"/settings/taxes")}
+>
+  <.live_component
+    module={InvoicerWeb.TaxLive.FormComponent}
+    id={@tax.id || :new}
+    title={@page_title}
+    action={@live_action}
+    tax={@tax}
+    navigate={~p"/settings/taxes"}
+  />
+</.modal>

@@ -191,7 +191,7 @@ defmodule InvoicerWeb.CoreComponents do
   def simple_form(assigns) do
     ~H"""
     <.form :let={f} for={@for} as={@as} {@rest}>
-      <div class="space-y-8 bg-white">
+      <div class="space-y-2 bg-white">
         <%= render_slot(@inner_block, f) %>
         <div :for={action <- @actions} class="mt-2 flex items-center gap-6">
           <%= render_slot(action, f) %>
@@ -279,30 +279,36 @@ defmodule InvoicerWeb.CoreComponents do
     assigns = assign_new(assigns, :checked, fn -> input_equals?(assigns.value, "true") end)
 
     ~H"""
-    <label phx-feedback-for={@name} class="flex items-center gap-4 text-sm leading-6 text-zinc-600">
-      <input type="hidden" name={@name} value="false" />
-      <input
-        type="checkbox"
-        id={@id || @name}
-        name={@name}
-        value="true"
-        checked={@checked}
-        class="rounded border-zinc-300 text-zinc-900 focus:ring-zinc-900"
-        {@rest}
-      />
-      <%= @label %>
-    </label>
+    <div class="form-control">
+      <label phx-feedback-for={@name} class="label cursor-pointer">
+        <input type="hidden" name={@name} value="false" />
+        <span class="label-text"><%= @label %></span>
+        <input
+          type="checkbox"
+          id={@id || @name}
+          name={@name}
+          value="true"
+          checked={@checked}
+          class="checkbox checkbox-sm checkbox-primary focus:ring-primary"
+          {@rest}
+        />
+      </label>
+    </div>
     """
   end
 
   def input(%{type: "select"} = assigns) do
     ~H"""
     <div phx-feedback-for={@name}>
-      <.label for={@id}><%= @label %></.label>
+      <.label for={@id}>
+        <span class="label-text">
+          <%= @label %>
+        </span>
+      </.label>
       <select
         id={@id}
         name={@name}
-        class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-zinc-500 focus:border-zinc-500 sm:text-sm"
+        class="select select-primary w-full focus:ring-0 focus:border-primary active:ring-0"
         multiple={@multiple}
         {@rest}
       >
@@ -517,6 +523,7 @@ defmodule InvoicerWeb.CoreComponents do
       <.back navigate={~p"/posts"}>Back to posts</.back>
   """
   attr :navigate, :any, required: true
+  attr :class, :string, default: nil
   slot :inner_block, required: true
 
   def back(assigns) do
@@ -524,7 +531,7 @@ defmodule InvoicerWeb.CoreComponents do
     <div class="mb-2">
       <.link
         navigate={@navigate}
-        class="btn"
+        class={["btn", @class]}
       >
         <Heroicons.arrow_left solid class="w-5 h-5 stroke-current inline mr-2" />
         <%= render_slot(@inner_block) %>

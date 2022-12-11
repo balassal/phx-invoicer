@@ -29,11 +29,11 @@ For creating invoices, we need some other operations, like managing products, pa
   - [x] Create uom
   - [x] Modify uom
   - [x] Delete uom
-- [ ] Taxes
-  - [ ] Listing
-  - [ ] Create tax
-  - [ ] Modify tax
-  - [ ] Delete tax
+- [x] Taxes
+  - [x] Listing
+  - [x] Create tax
+  - [x] Modify tax
+  - [x] Delete tax
 - [ ] Currency
   - [ ] Listing
   - [ ] Create currency
