@@ -49,7 +49,7 @@ defmodule InvoicerWeb.UomLiveTest do
       {:ok, index_live, _html} = live(conn, ~p"/settings/uoms")
 
       assert index_live |> element("#uoms-#{uom.id} a", "Edit") |> render_click() =~
-               "Edit Uom"
+               "Edit"
 
       assert_patch(index_live, ~p"/settings/uoms/#{uom}/edit")
 
@@ -89,7 +89,7 @@ defmodule InvoicerWeb.UomLiveTest do
       {:ok, show_live, _html} = live(conn, ~p"/settings/uoms/#{uom}")
 
       assert show_live |> element("a", "Edit") |> render_click() =~
-               "Edit Uom"
+               "Edit"
 
       assert_patch(show_live, ~p"/settings/uoms/#{uom}/show/edit")
 
