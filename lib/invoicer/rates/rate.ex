@@ -5,7 +5,7 @@ defmodule Invoicer.Rates.Rate do
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
   schema "rates" do
-    field :date, :naive_datetime
+    field :date, :date
     field :exchange, :decimal
 
     timestamps()

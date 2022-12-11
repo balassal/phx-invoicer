@@ -24,7 +24,7 @@ defmodule Invoicer.RatesTest do
       valid_attrs = %{date: ~N[2022-12-10 15:36:00], exchange: "120.5"}
 
       assert {:ok, %Rate{} = rate} = Rates.create_rate(valid_attrs)
-      assert rate.date == ~N[2022-12-10 15:36:00]
+      assert rate.date == ~D[2022-12-10]
       assert rate.exchange == Decimal.new("120.5")
     end
 
@@ -37,7 +37,7 @@ defmodule Invoicer.RatesTest do
       update_attrs = %{date: ~N[2022-12-11 15:36:00], exchange: "456.7"}
 
       assert {:ok, %Rate{} = rate} = Rates.update_rate(rate, update_attrs)
-      assert rate.date == ~N[2022-12-11 15:36:00]
+      assert rate.date == ~D[2022-12-11]
       assert rate.exchange == Decimal.new("456.7")
     end
 
