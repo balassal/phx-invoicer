@@ -1,0 +1,31 @@
+<.header>
+  Currency <%= @currency.id %>
+  <:subtitle>This is a currency record from your database.</:subtitle>
+  <:actions>
+    <.link navigate={~p"/settings/currencies/#{@currency}/rates"}>
+      <.button>Rates</.button>
+    </.link>
+    <.link patch={~p"/settings/currencies/#{@currency}/show/edit"} phx-click={JS.push_focus()}>
+      <.button>Edit currency</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Name"><%= @currency.name %></:item>
+  <:item title="Label"><%= @currency.label %></:item>
+  <:item title="Symbol"><%= @currency.symbol %></:item>
+</.list>
+
+<.back navigate={~p"/settings/currencies"} class="mt-4">Back to currencies</.back>
+
+<.modal :if={@live_action == :edit} id="currency-modal" show on_cancel={JS.patch(~p"/settings/currencies/#{@currency}")}>
+  <.live_component
+    module={InvoicerWeb.CurrencyLive.FormComponent}
+    id={@currency.id}
+    title={@page_title}
+    action={@live_action}
+    currency={@currency}
+    navigate={~p"/settings/currencies/#{@currency}"}
+  />
+</.modal>

@@ -1,0 +1,49 @@
+<.header>
+  Listing Currencies
+  <:actions>
+    <.link patch={~p"/settings/currencies/new"}>
+      <.button>New Currency</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table id="currencies" rows={@currencies} row_click={&JS.navigate(~p"/settings/currencies/#{&1}")}>
+  <:col :let={currency} label="Name"><%= currency.name %></:col>
+  <:col :let={currency} label="Label"><%= currency.label %></:col>
+  <:col :let={currency} label="Symbol"><%= currency.symbol %></:col>
+  <:action :let={currency}>
+    <div class="sr-only">
+      <.link navigate={~p"/settings/currencies/#{currency}"}>Show</.link>
+    </div>
+    <.link patch={~p"/settings/currencies/#{currency}/edit"}>
+      <button type="button" class="btn btn-warning btn-sm">
+        <Heroicons.pencil solid class="h-5 w-5 mr-2" />
+        Edit
+      </button>
+    </.link>
+  </:action>
+  <:action :let={currency}>
+    <.link phx-click={JS.push("delete", value: %{id: currency.id})} data-confirm="Are you sure?">
+      <button type="button" class="btn btn-error btn-sm">
+        <Heroicons.trash solid class="h-5 w-5 mr-2" />
+        Delete
+      </button>
+    </.link>
+  </:action>
+</.table>
+
+<.modal
+  :if={@live_action in [:new, :edit]}
+  id="currency-modal"
+  show
+  on_cancel={JS.navigate(~p"/settings/currencies")}
+>
+  <.live_component
+    module={InvoicerWeb.CurrencyLive.FormComponent}
+    id={@currency.id || :new}
+    title={@page_title}
+    action={@live_action}
+    currency={@currency}
+    navigate={~p"/settings/currencies"}
+  />
+</.modal>
