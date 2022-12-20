@@ -8,7 +8,7 @@ defmodule InvoicerWeb.RateLive.FormComponent do
     ~H"""
     <div>
       <.header>
-        <%= @title %>
+        <%= @title %> for <div class="badge badge-primary">Forint</div>
         <:subtitle>Use this form to manage rate records in your database.</:subtitle>
       </.header>
 
@@ -20,6 +20,7 @@ defmodule InvoicerWeb.RateLive.FormComponent do
         phx-change="validate"
         phx-submit="save"
       >
+        <.input field={{f, :currency_id}} type="hidden" />
         <.input field={{f, :date}} type="date" label="Date" />
         <.input field={{f, :exchange}} type="number" label="Exchange Rate" step="any" />
         <:actions>

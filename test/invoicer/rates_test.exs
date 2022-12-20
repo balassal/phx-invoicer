@@ -2,13 +2,14 @@ defmodule Invoicer.RatesTest do
   use Invoicer.DataCase
 
   alias Invoicer.Rates
+  alias Invoicer.CurrenciesFixtures
 
   describe "rates" do
     alias Invoicer.Rates.Rate
 
     import Invoicer.RatesFixtures
 
-    @invalid_attrs %{date: nil, exchange: nil}
+    @invalid_attrs %{date: nil, exchange: nil, currency_id: nil}
 
     test "list_rates/0 returns all rates" do
       rate = rate_fixture()
@@ -21,11 +22,13 @@ defmodule Invoicer.RatesTest do
     end
 
     test "create_rate/1 with valid data creates a rate" do
-      valid_attrs = %{date: ~N[2022-12-10 15:36:00], exchange: "120.5"}
+      currency = CurrenciesFixtures.currency_fixture()
+      valid_attrs = %{date: ~N[2022-12-10 15:36:00], exchange: "120.5", currency_id: currency.id}
 
       assert {:ok, %Rate{} = rate} = Rates.create_rate(valid_attrs)
       assert rate.date == ~D[2022-12-10]
       assert rate.exchange == Decimal.new("120.5")
+      assert rate.currency_id == currency.id
     end
 
     test "create_rate/1 with invalid data returns error changeset" do
@@ -34,11 +37,13 @@ defmodule Invoicer.RatesTest do
 
     test "update_rate/2 with valid data updates the rate" do
       rate = rate_fixture()
-      update_attrs = %{date: ~N[2022-12-11 15:36:00], exchange: "456.7"}
+      currency = CurrenciesFixtures.currency_fixture()
+      update_attrs = %{date: ~N[2022-12-11 15:36:00], exchange: "456.7", currency_id: currency.id}
 
       assert {:ok, %Rate{} = rate} = Rates.update_rate(rate, update_attrs)
       assert rate.date == ~D[2022-12-11]
       assert rate.exchange == Decimal.new("456.7")
+      assert rate.currency_id == currency.id
     end
 
     test "update_rate/2 with invalid data returns error changeset" do

@@ -48,7 +48,7 @@ defmodule InvoicerWeb.CurrencyLiveTest do
     test "updates currency in listing", %{conn: conn, currency: currency} do
       {:ok, index_live, _html} = live(conn, ~p"/settings/currencies")
 
-      assert index_live |> element("#currencies-#{currency.id} a", "Edit") |> render_click() =~
+      assert index_live |> element("#currencies-#{currency.id} a[id=#{currency.id}_edit]") |> render_click() =~
                "Edit Currency"
 
       assert_patch(index_live, ~p"/settings/currencies/#{currency}/edit")
@@ -70,7 +70,7 @@ defmodule InvoicerWeb.CurrencyLiveTest do
     test "deletes currency in listing", %{conn: conn, currency: currency} do
       {:ok, index_live, _html} = live(conn, ~p"/settings/currencies")
 
-      assert index_live |> element("#currencies-#{currency.id} a", "Delete") |> render_click()
+      assert index_live |> element("#currencies-#{currency.id} a[id=#{currency.id}_delete]", nil) |> render_click()
       refute has_element?(index_live, "#currency-#{currency.id}")
     end
   end

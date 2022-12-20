@@ -7,6 +7,7 @@ defmodule Invoicer.Rates.Rate do
   schema "rates" do
     field :date, :date
     field :exchange, :decimal
+    field :currency_id, :binary_id
 
     timestamps()
   end
@@ -14,7 +15,8 @@ defmodule Invoicer.Rates.Rate do
   @doc false
   def changeset(rate, attrs) do
     rate
-    |> cast(attrs, [:date, :exchange])
-    |> validate_required([:date, :exchange])
+    |> cast(attrs, [:date, :exchange, :currency_id])
+    |> validate_required([:date, :exchange, :currency_id])
+    |> foreign_key_constraint(:currency_id)
   end
 end

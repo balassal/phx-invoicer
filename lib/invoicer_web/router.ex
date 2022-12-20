@@ -39,13 +39,6 @@ defmodule InvoicerWeb.Router do
     live "/taxes/:id", TaxLive.Show, :show
     live "/taxes/:id/show/edit", TaxLive.Show, :edit
 
-    live "/rates", RateLive.Index, :index
-    live "/rates/new", RateLive.Index, :new
-    live "/rates/:id/edit", RateLive.Index, :edit
-
-    live "/rates/:id", RateLive.Show, :show
-    live "/rates/:id/show/edit", RateLive.Show, :edit
-
     live "/currencies", CurrencyLive.Index, :index
     live "/currencies/new", CurrencyLive.Index, :new
     live "/currencies/:id/edit", CurrencyLive.Index, :edit
@@ -53,7 +46,12 @@ defmodule InvoicerWeb.Router do
     live "/currencies/:id", CurrencyLive.Show, :show
     live "/currencies/:id/show/edit", CurrencyLive.Show, :edit
 
-    live "/currencies/:id/rates", CurrencyRatesLive
+    live "/currencies/:id/rates", RateLive.Index, :index
+    live "/currencies/:id/rates/new", RateLive.Index, :new
+    live "/currencies/:id/rates/:rate_id/edit", RateLive.Index, :edit
+
+    live "/currencies/:id/rates/:rate_id", RateLive.Show, :show
+    live "/currencies/:id/rates/:rate_id/show/edit", RateLive.Show, :edit
   end
 
   # Other scopes may use custom stacks.

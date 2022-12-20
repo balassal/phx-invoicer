@@ -101,4 +101,34 @@ defmodule Invoicer.Currencies do
   def change_currency(%Currency{} = currency, attrs \\ %{}) do
     Currency.changeset(currency, attrs)
   end
+
+  @doc """
+  Returns the list of currencies with rates.
+
+  ## Examples
+
+      iex> list_currencies_with_rates()
+      [%Currency{}, ...]
+
+  """
+  def list_currencies_with_rates do
+    Repo.all(Currency)
+    |> Repo.preload([:rates])
+  end
+
+  @doc """
+  Gets a single currency with the related rates.
+
+  Raises `Ecto.NoResultsError` if the Currency does not exist.
+
+  ## Examples
+
+      iex> get_currency_with_rates!(123)
+      %Currency{}
+
+      iex> get_currency_with_rates!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_currency_with_rates!(id), do: Repo.get!(Currency, id) |> Repo.preload([:rates])
 end

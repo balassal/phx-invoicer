@@ -1,6 +1,7 @@
 defmodule Invoicer.Currencies.Currency do
   use Ecto.Schema
   import Ecto.Changeset
+  alias Invoicer.Rates.Rate
 
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
@@ -8,6 +9,7 @@ defmodule Invoicer.Currencies.Currency do
     field :label, :string
     field :name, :string
     field :symbol, :string
+    has_many :rates, Rate
 
     timestamps()
   end

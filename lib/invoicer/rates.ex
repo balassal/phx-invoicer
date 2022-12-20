@@ -101,4 +101,18 @@ defmodule Invoicer.Rates do
   def change_rate(%Rate{} = rate, attrs \\ %{}) do
     Rate.changeset(rate, attrs)
   end
+
+  @doc """
+  Return a list of rates related to the given currency id
+
+  ## Examples
+
+      iex> get_rates_by_currency(1234)
+      [%Rate{}, ...]
+  """
+
+  def get_rates_by_currency(currency_id) do
+    query = from r in Rate, where: r.currency_id == ^currency_id, select: r
+    Repo.all(query)
+  end
 end

@@ -1,32 +1,26 @@
 <.header>
-  Listing Rates
+  Listing Rates of <.link class="link link-primary" navigate={~p"/settings/currencies/#{@currency.id}"}><%= @currency.name %></.link>
   <:actions>
-    <.link patch={~p"/settings/rates/new"}>
-      <.button>New Rate</.button>
+    <.link patch={~p"/settings/currencies/#{@currency.id}/rates/new"}>
+      <.button class="btn-sm">New Rate</.button>
     </.link>
   </:actions>
 </.header>
 
-<.table id="rates" rows={@rates} row_click={&JS.navigate(~p"/settings/rates/#{&1}")}>
+<.table id="rates" rows={@rates} row_click={&JS.navigate(~p"/settings/currencies/#{@currency.id}/rates/#{&1}")}>
   <:col :let={rate} label="Date"><%= rate.date %></:col>
   <:col :let={rate} label="Exchange"><%= rate.exchange %></:col>
   <:action :let={rate}>
     <div class="sr-only">
-      <.link navigate={~p"/settings/rates/#{rate}"}>Show</.link>
+      <.link navigate={~p"/settings/currencies/#{@currency.id}/rates/#{rate}"}>Show</.link>
     </div>
-    <.link patch={~p"/settings/rates/#{rate}/edit"}>
-      <button type="button" class="btn btn-warning btn-sm">
-        <Heroicons.pencil solid class="h-5 w-5 mr-2" />
-        Edit
-      </button>
+    <.link id={"#{rate.id}_edit"} patch={~p"/settings/currencies/#{@currency.id}/rates/#{rate}/edit"} class="btn btn-warning btn-sm">
+      <Heroicons.pencil solid class="h-5 w-5" />
     </.link>
   </:action>
   <:action :let={rate}>
-    <.link phx-click={JS.push("delete", value: %{id: rate.id})} data-confirm="Are you sure?">
-      <button type="button" class="btn btn-error btn-sm">
-        <Heroicons.trash solid class="h-5 w-5 mr-2" />
-        Delete
-      </button>
+    <.link id={"#{rate.id}_delete"} phx-click={JS.push("delete", value: %{id: rate.id, currency_id: @currency.id})} data-confirm="Are you sure?" class="btn btn-error btn-sm">
+      <Heroicons.trash solid class="h-5 w-5" />
     </.link>
   </:action>
 </.table>
@@ -35,7 +29,7 @@
   :if={@live_action in [:new, :edit]}
   id="rate-modal"
   show
-  on_cancel={JS.navigate(~p"/settings/rates")}
+  on_cancel={JS.navigate(~p"/settings/currencies/#{@currency.id}/rates")}
 >
   <.live_component
     module={InvoicerWeb.RateLive.FormComponent}
@@ -43,6 +37,6 @@
     title={@page_title}
     action={@live_action}
     rate={@rate}
-    navigate={~p"/settings/rates"}
+    navigate={~p"/settings/currencies/#{@currency.id}/rates"}
   />
 </.modal>

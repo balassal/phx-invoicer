@@ -2,7 +2,7 @@
   Listing Currencies
   <:actions>
     <.link patch={~p"/settings/currencies/new"}>
-      <.button>New Currency</.button>
+      <.button class="btn-sm">New Currency</.button>
     </.link>
   </:actions>
 </.header>
@@ -15,19 +15,13 @@
     <div class="sr-only">
       <.link navigate={~p"/settings/currencies/#{currency}"}>Show</.link>
     </div>
-    <.link patch={~p"/settings/currencies/#{currency}/edit"}>
-      <button type="button" class="btn btn-warning btn-sm">
-        <Heroicons.pencil solid class="h-5 w-5 mr-2" />
-        Edit
-      </button>
+    <.link id={"#{currency.id}_edit"} patch={~p"/settings/currencies/#{currency}/edit"} class="btn btn-warning btn-sm">
+      <Heroicons.pencil solid class="h-5 w-5" />
     </.link>
   </:action>
   <:action :let={currency}>
-    <.link phx-click={JS.push("delete", value: %{id: currency.id})} data-confirm="Are you sure?">
-      <button type="button" class="btn btn-error btn-sm">
-        <Heroicons.trash solid class="h-5 w-5 mr-2" />
-        Delete
-      </button>
+    <.link id={"#{currency.id}_delete"} phx-click={JS.push("delete", value: %{id: currency.id})} data-confirm="Are you sure?" class="btn btn-error btn-sm">
+      <Heroicons.trash solid class="h-5 w-5" />
     </.link>
   </:action>
 </.table>
