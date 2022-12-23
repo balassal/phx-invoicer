@@ -17,6 +17,7 @@ defmodule Invoicer.Rates.Rate do
     rate
     |> cast(attrs, [:date, :exchange, :currency_id])
     |> validate_required([:date, :exchange, :currency_id])
+    |> unique_constraint(:date)
     |> foreign_key_constraint(:currency_id)
   end
 end
