@@ -34,16 +34,16 @@ For creating invoices, we need some other operations, like managing products, pa
   - [x] Create tax
   - [x] Modify tax
   - [x] Delete tax
-- [ ] Exchange rates
-  - [ ] Listing
-  - [ ] Create rate
-  - [ ] Modify rate
-  - [ ] Delete rate
-- [ ] Currency
-  - [ ] Listing
-  - [ ] Create currency
-  - [ ] Modify currency
-  - [ ] Delete currency
+- [x] Exchange rates
+  - [x] Listing
+  - [x] Create rate
+  - [x] Modify rate
+  - [x] Delete rate
+- [x] Currency
+  - [x] Listing
+  - [x] Create currency
+  - [x] Modify currency
+  - [x] Delete currency
 - [ ] Address
   - [ ] Listing
   - [ ] Create address
