@@ -1,0 +1,45 @@
+<.header>
+  Listing Partners
+  <:actions>
+    <.link patch={~p"/partners/new"}>
+      <.button class="btn-sm">New Partner</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table id="partners" rows={@partners} row_click={&JS.navigate(~p"/partners/#{&1}")}>
+  <:col :let={partner} label="Name"><%= partner.name %></:col>
+  <:col :let={partner} label="Type"><%= partner.type %></:col>
+  <:col :let={partner} label="Active?">
+    <input type="checkbox" checked={partner.active} disabled class="checkbox" />
+  </:col>
+  <:action :let={partner}>
+    <div class="sr-only">
+      <.link navigate={~p"/partners/#{partner}"}>Show</.link>
+    </div>
+    <.link patch={~p"/partners/#{partner}/edit"} class="btn btn-warning btn-sm">
+      <Heroicons.pencil solid class="h-5 w-5" />
+    </.link>
+  </:action>
+  <:action :let={partner}>
+    <.link phx-click={JS.push("delete", value: %{id: partner.id})} data-confirm="Are you sure?" class="btn btn-error btn-sm">
+      <Heroicons.trash solid class="h-5 w-5" />
+    </.link>
+  </:action>
+</.table>
+
+<.modal
+  :if={@live_action in [:new, :edit]}
+  id="partner-modal"
+  show
+  on_cancel={JS.navigate(~p"/partners")}
+>
+  <.live_component
+    module={InvoicerWeb.PartnerLive.FormComponent}
+    id={@partner.id || :new}
+    title={@page_title}
+    action={@live_action}
+    partner={@partner}
+    navigate={~p"/partners"}
+  />
+</.modal>

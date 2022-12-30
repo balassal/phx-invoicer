@@ -1,0 +1,36 @@
+<.header>
+  Partner <%= @partner.id %>
+  <:subtitle>This is a partner record from your database.</:subtitle>
+  <:actions>
+    <.link patch={~p"/partners/#{@partner}/show/edit"} phx-click={JS.push_focus()}>
+      <.button class="btn-sm">Edit partner</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Active?">
+    <input type="checkbox" class="checkbox" disabled checked={@partner.active}>
+  </:item>
+  <:item title="Name"><%= @partner.name %></:item>
+  <:item title="Type"><%= @partner.type %></:item>
+  <:item title="VAT"><%= @partner.vatnumber %></:item>
+  <:item title="Currency"><%= @currency.name %> (<%= @currency.label %>)</:item>
+  <:item title="Payment Method"><%= @partner.payment_method %></:item>
+  <:item title="Payment Term"><%= @partner.payment_term %></:item>
+</.list>
+
+
+
+<.back navigate={~p"/partners"} class="btn-sm mt-6">Back to partners</.back>
+
+<.modal :if={@live_action == :edit} id="partner-modal" show on_cancel={JS.patch(~p"/partners/#{@partner}")}>
+  <.live_component
+    module={InvoicerWeb.PartnerLive.FormComponent}
+    id={@partner.id}
+    title={@page_title}
+    action={@live_action}
+    partner={@partner}
+    navigate={~p"/partners/#{@partner}"}
+  />
+</.modal>
