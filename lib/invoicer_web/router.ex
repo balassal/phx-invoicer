@@ -18,6 +18,13 @@ defmodule InvoicerWeb.Router do
     pipe_through :browser
 
     live "/", Pages.HomeLive
+
+    live "/partners", PartnerLive.Index, :index
+    live "/partners/new", PartnerLive.Index, :new
+    live "/partners/:id/edit", PartnerLive.Index, :edit
+
+    live "/partners/:id", PartnerLive.Show, :show
+    live "/partners/:id/show/edit", PartnerLive.Show, :edit
   end
 
   scope "/settings", InvoicerWeb do
