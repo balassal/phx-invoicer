@@ -11,6 +11,7 @@ defmodule Invoicer.Addresses.Address do
     field :street, :string
     field :type, :string
     field :zip, :string
+    field :partner_id, :binary_id
 
     timestamps()
   end
@@ -18,7 +19,7 @@ defmodule Invoicer.Addresses.Address do
   @doc false
   def changeset(address, attrs) do
     address
-    |> cast(attrs, [:active, :street, :zip, :city, :country, :type])
+    |> cast(attrs, [:active, :street, :zip, :city, :country, :type, :partner_id])
     |> validate_required([:active, :street, :zip, :city, :country, :type])
   end
 end

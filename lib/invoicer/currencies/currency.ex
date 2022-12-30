@@ -9,6 +9,7 @@ defmodule Invoicer.Currencies.Currency do
     field :label, :string
     field :name, :string
     field :symbol, :string
+    field :partner_id, :binary_id
     has_many :rates, Rate
 
     timestamps()
@@ -17,7 +18,7 @@ defmodule Invoicer.Currencies.Currency do
   @doc false
   def changeset(currency, attrs) do
     currency
-    |> cast(attrs, [:label, :name, :symbol])
+    |> cast(attrs, [:label, :name, :symbol, :partner_id])
     |> validate_required([:label, :name, :symbol])
   end
 end
