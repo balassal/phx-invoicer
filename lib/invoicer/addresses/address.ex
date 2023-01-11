@@ -5,7 +5,7 @@ defmodule Invoicer.Addresses.Address do
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
   schema "addresses" do
-    field :active, :boolean, default: false
+    field :active, :boolean, default: true
     field :city, :string
     field :country, :string
     field :street, :string
