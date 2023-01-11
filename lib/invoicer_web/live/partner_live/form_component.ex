@@ -80,7 +80,6 @@ defmodule InvoicerWeb.PartnerLive.FormComponent do
   end
 
   defp save_partner(socket, :new, partner_params) do
-    IO.inspect(partner_params)
     case Partners.create_partner(partner_params) do
       {:ok, _partner} ->
         {:noreply,
