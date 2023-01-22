@@ -12,7 +12,7 @@ defmodule Invoicer.Partners.Partner do
     field :payment_term, :integer, default: 0
     field :type, :string
     field :vatnumber, :string
-    has_one :currency, Invoicer.Currencies.Currency
+    field :currency_id, :binary_id
     has_many :addresses, Invoicer.Addresses.Address
 
     timestamps()
@@ -21,7 +21,7 @@ defmodule Invoicer.Partners.Partner do
   @doc false
   def changeset(partner, attrs) do
     partner
-    |> cast(attrs, [:my_company, :name, :active, :type, :vatnumber, :payment_term, :payment_method])
+    |> cast(attrs, [:my_company, :name, :active, :type, :vatnumber, :payment_term, :payment_method, :currency_id])
     |> validate_required([:my_company, :name])
     |> unique_constraint(:vatnumber)
     |> unique_constraint(:name)

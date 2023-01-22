@@ -22,12 +22,14 @@ defmodule InvoicerWeb.PartnerLive.FormComponent do
         phx-submit="save"
       >
         <.input field={{f, :active}} type="checkbox" label="Active" />
+        <.input field={{f, :my_company}} type="hidden" />
         <.input field={{f, :name}} type="text" label="Name" />
         <.input field={{f, :vatnumber}} type="text" label="VAT Number" />
         <.input field={{f, :type}} type="select" label="Type" options={["customer", "supplier", "other"]} />
         <.input field={{f, :payment_method}} type="select" label="Payment Method" options={["transfer", "credit", "card", "cash", "voucher"]} />
         <.input field={{f, :payment_term}} type="number" label="Payment Therm" step="any" />
-        <.input field={{f, :currency}} type="select" label="Currency" options={@currencies} />
+        <.input field={{f, :currency_id}} type="select" label="Currency" options={@currencies} />
+
         <:actions>
           <.button class="btn-sm" phx-disable-with="Saving...">Save Partner</.button>
         </:actions>
