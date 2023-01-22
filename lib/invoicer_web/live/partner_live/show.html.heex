@@ -20,7 +20,21 @@
   <:item title="Payment Term"><%= @partner.payment_term %></:item>
 </.list>
 
-
+<h3 class="text-lg mt-4 mb-2">Addresses</h3>
+<div class="flex flex-wrap mb-6 gap-4">
+  <%= for address <- @partner.addresses do %>
+    <.live_component
+      module={InvoicerWeb.AddressLive.AddressComponent}
+      id={address.id}
+      address={address}
+    />
+  <% end %>
+  <div class="flex items-center p-6">
+    <.button class="btn-circle" phx-click="new_address">
+      <Heroicons.plus solid class="w-5 h-5" />
+    </.button>
+  </div>
+</div>
 
 <.back navigate={~p"/partners"} class="btn-sm mt-6">Back to partners</.back>
 
@@ -34,3 +48,26 @@
     navigate={~p"/partners/#{@partner}"}
   />
 </.modal>
+
+<.modal :if={@live_action == :edit_address} id="partner-modal" show on_cancel={JS.patch(~p"/partners/#{@partner}")}>
+  <.live_component
+    module={InvoicerWeb.AddressLive.FormComponent}
+    id={@partner.id}
+    title={@page_title}
+    action={@live_action}
+    address={@edit_address}
+    navigate={~p"/partners/#{@partner}"}
+  />
+</.modal>
+
+<.modal :if={@live_action == :new_address} id="partner-modal" show on_cancel={JS.patch(~p"/partners/#{@partner}")}>
+  <.live_component
+    module={InvoicerWeb.AddressLive.FormComponent}
+    id={@partner.id}
+    title={@page_title}
+    action={@live_action}
+    address={@new_address}
+    navigate={~p"/partners/#{@partner}"}
+  />
+</.modal>
+
