@@ -3,13 +3,15 @@ defmodule InvoicerWeb.PartnerLiveTest do
 
   import Phoenix.LiveViewTest
   import Invoicer.PartnersFixtures
+  import Invoicer.CurrenciesFixtures
 
-  @create_attrs %{}
-  @update_attrs %{}
-  @invalid_attrs %{}
+  @create_attrs %{active: true, my_company: nil, name: "some name", payment_method: "cash", payment_term: 42, type: "customer", vatnumber: "some vatnumber"}
+  @update_attrs %{active: true, my_company: nil, name: "some updated name", payment_method: "voucher", payment_term: 42, type: "supplier", vatnumber: "some updated vatnumber"}
+  @invalid_attrs %{active: false, my_company: nil, name: nil, payment_method: "cash", payment_term: nil, type: "other", vatnumber: nil}
 
   defp create_partner(_) do
-    partner = partner_fixture()
+    currency = currency_fixture()
+    partner = partner_fixture(%{currency_id: currency.id})
     %{partner: partner}
   end
 
@@ -46,7 +48,7 @@ defmodule InvoicerWeb.PartnerLiveTest do
     test "updates partner in listing", %{conn: conn, partner: partner} do
       {:ok, index_live, _html} = live(conn, ~p"/partners")
 
-      assert index_live |> element("#partners-#{partner.id} a", "Edit") |> render_click() =~
+      assert index_live |> element("#partners-#{partner.id} a[id=#{partner.id}_edit]") |> render_click() =~
                "Edit Partner"
 
       assert_patch(index_live, ~p"/partners/#{partner}/edit")
@@ -67,7 +69,7 @@ defmodule InvoicerWeb.PartnerLiveTest do
     test "deletes partner in listing", %{conn: conn, partner: partner} do
       {:ok, index_live, _html} = live(conn, ~p"/partners")
 
-      assert index_live |> element("#partners-#{partner.id} a", "Delete") |> render_click()
+      assert index_live |> element("#partners-#{partner.id} a[id=#{partner.id}_delete") |> render_click()
       refute has_element?(index_live, "#partner-#{partner.id}")
     end
   end

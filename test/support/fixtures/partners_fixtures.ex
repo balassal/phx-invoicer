@@ -29,14 +29,12 @@ defmodule Invoicer.PartnersFixtures do
       attrs
       |> Enum.into(%{
         active: true,
-        address_ids: [],
-        bank_account_ids: [],
         my_company: unique_partner_my_company(),
         name: unique_partner_name(),
         payment_method: "some payment_method",
-        payment_therm: 42,
+        payment_term: 42,
         type: "some type",
-        vatnumber: unique_partner_vatnumber()
+        vatnumber: unique_partner_vatnumber(),
       })
       |> Invoicer.Partners.create_partner()
 

@@ -17,12 +17,12 @@
     <div class="sr-only">
       <.link navigate={~p"/partners/#{partner}"}>Show</.link>
     </div>
-    <.link patch={~p"/partners/#{partner}/edit"} class="btn btn-warning btn-sm">
+    <.link id={"#{partner.id}_edit"} patch={~p"/partners/#{partner}/edit"} class="btn btn-warning btn-sm">
       <Heroicons.pencil solid class="h-5 w-5" />
     </.link>
   </:action>
   <:action :let={partner}>
-    <.link phx-click={JS.push("delete", value: %{id: partner.id})} data-confirm="Are you sure?" class="btn btn-error btn-sm">
+    <.link id={"#{partner.id}_delete"} phx-click={JS.push("delete", value: %{id: partner.id})} data-confirm="Are you sure?" class="btn btn-error btn-sm">
       <Heroicons.trash solid class="h-5 w-5" />
     </.link>
   </:action>

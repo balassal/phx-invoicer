@@ -8,7 +8,7 @@ defmodule Invoicer.PartnersTest do
 
     import Invoicer.PartnersFixtures
 
-    @invalid_attrs %{active: nil, address_ids: nil, bank_account_ids: nil, my_company: nil, name: nil, payment_method: nil, payment_therm: nil, type: nil, vatnumber: nil}
+    @invalid_attrs %{active: nil, my_company: nil, name: nil, payment_method: nil, payment_term: nil, type: nil, vatnumber: nil}
 
     test "list_partners/0 returns all partners" do
       partner = partner_fixture()
@@ -21,16 +21,14 @@ defmodule Invoicer.PartnersTest do
     end
 
     test "create_partner/1 with valid data creates a partner" do
-      valid_attrs = %{active: true, address_ids: [], bank_account_ids: [], my_company: true, name: "some name", payment_method: "some payment_method", payment_therm: 42, type: "some type", vatnumber: "some vatnumber"}
+      valid_attrs = %{active: true, my_company: true, name: "some name", payment_method: "some payment_method", payment_term: 42, type: "some type", vatnumber: "some vatnumber"}
 
       assert {:ok, %Partner{} = partner} = Partners.create_partner(valid_attrs)
       assert partner.active == true
-      assert partner.address_ids == []
-      assert partner.bank_account_ids == []
       assert partner.my_company == true
       assert partner.name == "some name"
       assert partner.payment_method == "some payment_method"
-      assert partner.payment_therm == 42
+      assert partner.payment_term == 42
       assert partner.type == "some type"
       assert partner.vatnumber == "some vatnumber"
     end
@@ -41,16 +39,14 @@ defmodule Invoicer.PartnersTest do
 
     test "update_partner/2 with valid data updates the partner" do
       partner = partner_fixture()
-      update_attrs = %{active: false, address_ids: [], bank_account_ids: [], my_company: false, name: "some updated name", payment_method: "some updated payment_method", payment_therm: 43, type: "some updated type", vatnumber: "some updated vatnumber"}
+      update_attrs = %{active: false, my_company: false, name: "some updated name", payment_method: "some updated payment_method", payment_term: 43, type: "some updated type", vatnumber: "some updated vatnumber"}
 
       assert {:ok, %Partner{} = partner} = Partners.update_partner(partner, update_attrs)
       assert partner.active == false
-      assert partner.address_ids == []
-      assert partner.bank_account_ids == []
       assert partner.my_company == false
       assert partner.name == "some updated name"
       assert partner.payment_method == "some updated payment_method"
-      assert partner.payment_therm == 43
+      assert partner.payment_term == 43
       assert partner.type == "some updated type"
       assert partner.vatnumber == "some updated vatnumber"
     end
