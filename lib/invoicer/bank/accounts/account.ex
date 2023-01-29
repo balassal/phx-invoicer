@@ -15,7 +15,8 @@ defmodule Invoicer.Bank.Accounts.Account do
   @doc false
   def changeset(account, attrs) do
     account
-    |> cast(attrs, [:name, :number])
-    |> validate_required([:name, :number])
+    |> cast(attrs, [:name, :number, :currency_id])
+    |> validate_required([:name, :number, :currency_id])
+    |> unique_constraint(:number)
   end
 end
