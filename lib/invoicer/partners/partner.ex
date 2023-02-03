@@ -14,6 +14,7 @@ defmodule Invoicer.Partners.Partner do
     field :vatnumber, :string
     field :currency_id, :binary_id
     has_many :addresses, Invoicer.Addresses.Address
+    has_many :bank_accounts, Invoicer.Bank.Accounts.Account
 
     timestamps()
   end

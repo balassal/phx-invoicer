@@ -36,6 +36,22 @@
   </div>
 </div>
 
+<h3 class="text-lg mt-4 mb-2">Bank Accounts</h3>
+<div class="flex flex-wrap mb-6 gap-4">
+  <%= for account <- @partner.bank_accounts do %>
+    <.live_component
+      module={InvoicerWeb.BankAccountLive.BankAccountComponent}
+      id={account.id}
+      account={account}
+    />
+  <% end %>
+  <div class="flex items-center p-6">
+    <.button class="btn-circle" phx-click="new_bank_account">
+      <Heroicons.plus solid class="w-5 h-5" />
+    </.button>
+  </div>
+</div>
+
 <.back navigate={~p"/partners"} class="btn-sm mt-6">Back to partners</.back>
 
 <.modal :if={@live_action == :edit} id="partner-modal" show on_cancel={JS.patch(~p"/partners/#{@partner}")}>
@@ -71,3 +87,24 @@
   />
 </.modal>
 
+<.modal :if={@live_action == :new_bank_account} id="partner-modal" show on_cancel={JS.patch(~p"/partners/#{@partner}")}>
+  <.live_component
+    module={InvoicerWeb.BankAccountLive.FormComponent}
+    id={@partner.id}
+    title={@page_title}
+    action={@live_action}
+    account={@account}
+    navigate={~p"/partners/#{@partner}"}
+  />
+</.modal>
+
+<.modal :if={@live_action == :edit_bank_account} id="partner-modal" show on_cancel={JS.patch(~p"/partners/#{@partner}")}>
+  <.live_component
+    module={InvoicerWeb.BankAccountLive.FormComponent}
+    id={@partner.id}
+    title={@page_title}
+    action={@live_action}
+    account={@account}
+    navigate={~p"/partners/#{@partner}"}
+  />
+</.modal>
