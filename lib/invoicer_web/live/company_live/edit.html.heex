@@ -1,0 +1,104 @@
+<.header>
+  Edit Company
+  <:actions>
+    <.link navigate={~p"/settings/company"}>
+      <.button class="btn-sm btn-ghost">
+        <Heroicons.arrow_left solid class="w-5 h-5 mr-2" />
+        Back
+      </.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.simple_form
+  :let={f}
+  for={@changeset}
+  id="company-form"
+  phx-change="validate"
+  phx-submit="save"
+>
+  <.input field={{f, :name}} type="text" label="Name" />
+  <.input field={{f, :vatnumber}} type="text" label="VAT Number" />
+  <.input field={{f, :payment_method}} type="select" label="Payment Method" options={["transfer", "credit", "card", "cash", "voucher"]} />
+  <.input field={{f, :payment_term}} type="text" label="Payment Term" />
+  <.input field={{f, :currency_id}} type="select" label="Currency" options={@currencies} />
+  <:actions>
+    <.button phx-disable-with="Saving...">Save</.button>
+  </:actions>
+</.simple_form>
+
+<h3 class="text-lg mt-4 mb-2">Addresses</h3>
+<div class="flex flex-wrap mb-6 gap-4">
+  <%= for address <- @company.addresses do %>
+    <.live_component
+      module={InvoicerWeb.AddressLive.AddressComponent}
+      id={address.id}
+      address={address}
+    />
+  <% end %>
+  <div class="flex items-center p-6">
+    <.button class="btn-circle" phx-click="new_address">
+      <Heroicons.plus solid class="w-5 h-5" />
+    </.button>
+  </div>
+</div>
+
+<h3 class="text-lg mt-4 mb-2">Bank Accounts</h3>
+<div class="flex flex-wrap mb-6 gap-4">
+  <%= for account <- @company.bank_accounts do %>
+    <.live_component
+      module={InvoicerWeb.BankAccountLive.BankAccountComponent}
+      id={account.id}
+      account={account}
+    />
+  <% end %>
+  <div class="flex items-center p-6">
+    <.button class="btn-circle" phx-click="new_bank_account">
+      <Heroicons.plus solid class="w-5 h-5" />
+    </.button>
+  </div>
+</div>
+
+<.modal :if={@live_action == :new_address} id="company-modal" show on_cancel={JS.patch(~p"/settings/company/edit")}>
+  <.live_component
+    module={InvoicerWeb.AddressLive.FormComponent}
+    id={@company.id}
+    title={@page_title}
+    action={@live_action}
+    address={@new_address}
+    navigate={~p"/settings/company/edit"}
+  />
+</.modal>
+
+<.modal :if={@live_action == :edit_address} id="company-modal" show on_cancel={JS.patch(~p"/settings/company/edit")}>
+  <.live_component
+    module={InvoicerWeb.AddressLive.FormComponent}
+    id={@company.id}
+    title={@page_title}
+    action={@live_action}
+    address={@edit_address}
+    navigate={~p"/settings/company/edit"}
+  />
+</.modal>
+
+<.modal :if={@live_action == :new_bank_account} id="company-modal" show on_cancel={JS.patch(~p"/settings/company/edit")}>
+  <.live_component
+    module={InvoicerWeb.BankAccountLive.FormComponent}
+    id={@company.id}
+    title={@page_title}
+    action={@live_action}
+    account={@new_bank_account}
+    navigate={~p"/settings/company/edit"}
+  />
+</.modal>
+
+<.modal :if={@live_action == :edit_bank_account} id="company-modal" show on_cancel={JS.patch(~p"/settings/company/edit")}>
+  <.live_component
+    module={InvoicerWeb.BankAccountLive.FormComponent}
+    id={@company.id}
+    title={@page_title}
+    action={@live_action}
+    account={@edit_bank_account}
+    navigate={~p"/settings/company/edit"}
+  />
+</.modal>

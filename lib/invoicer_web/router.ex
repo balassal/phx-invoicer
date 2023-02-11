@@ -32,6 +32,9 @@ defmodule InvoicerWeb.Router do
 
     live "/", Pages.SettingsLive
 
+    live "/company", CompanyLive.Index, :index
+    live "/company/edit", CompanyLive.Edit, :edit
+
     live "/uoms", UomLive.Index, :index
     live "/uoms/new", UomLive.Index, :new
     live "/uoms/:id/edit", UomLive.Index, :edit

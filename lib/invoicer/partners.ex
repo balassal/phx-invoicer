@@ -18,7 +18,9 @@ defmodule Invoicer.Partners do
 
   """
   def list_partners do
-    Repo.all(Partner)
+    # filtering out my company
+    query = from p in Partner, where: p.my_company == false, select: p
+    Repo.all(query)
   end
 
   @doc """
@@ -100,5 +102,11 @@ defmodule Invoicer.Partners do
   """
   def change_partner(%Partner{} = partner, attrs \\ %{}) do
     Partner.changeset(partner, attrs)
+  end
+
+  def get_company do
+    query = from p in Invoicer.Partners.Partner, where: p.my_company == true, select: p
+    results = Repo.all(query)
+    List.first(results)
   end
 end

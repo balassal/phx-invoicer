@@ -1,0 +1,66 @@
+<.header>
+  Company
+  <:actions>
+    <.link navigate={~p"/settings/company/edit"}>
+      <.button class="btn-sm btn-ghost">
+        <Heroicons.pencil solid class="w-5 h-5 mr-2" />
+        Edit
+      </.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Name"><%= @company.name %></:item>
+  <:item title="VAT Number"><%= @company.vatnumber %></:item>
+  <:item title="Payment Method"><%= @company.payment_method %></:item>
+  <:item title="Payment Term"><%= @company.payment_term %></:item>
+  <:item title="Currency"><%= @currency.name %> (<%= @currency.label %>)</:item>
+</.list>
+
+<div :if={length(@company.addresses) > 0}>
+  <h3 class="text-lg mt-6 mb-2">Addresses</h3>
+  <div class="flex flex-wrap mb-6 gap-4">
+    <%= for address <- @company.addresses do %>
+    <div class="card w-96 bg-base-200 shadow-lg">
+      <div class="card-body">
+        <div class="flex align-middle justify-between">
+          <h2 class="card-title"><%= address.street %></h2>
+          <.address_icon type={address.type} />
+        </div>
+        <p>
+          <%= address.zip %> <%= address.city %>
+        </p>
+        <p>
+          <%= address.country %>
+        </p>
+      </div>
+    </div>
+    <% end %>
+  </div>
+</div>
+
+<div :if={length(@company.bank_accounts) > 0}>
+  <h3 class="text-lg mt-6 mb-2">Bank Accounts</h3>
+  <div class="flex flex-wrap mb-6 gap-4">
+    <%= for account <- @company.bank_accounts do %>
+    <div class="card w-96 bg-base-200 shadow-lg">
+      <div class="card-body">
+        <h2 class="card-title">
+          <span>
+            <%= account.name %>
+          </span>
+          <%!-- <span>
+            <%= currency.symbol %>
+          </span> --%>
+        </h2>
+        <p>
+          <%= account.number %>
+        </p>
+        <%!-- <div class="flex align-middle justify-between">
+        </div> --%>
+      </div>
+    </div>
+    <% end %>
+  </div>
+</div>
