@@ -1,0 +1,47 @@
+<.header>
+  Product <%= @product.id %>
+  <:subtitle>This is a product record from your database.</:subtitle>
+  <:actions>
+    <.link navigate={~p"/products"}>
+      <.button class="btn-sm">Back</.button>
+    </.link>
+    <.link patch={~p"/products/#{@product}/show/edit"} phx-click={JS.push_focus()}>
+      <.button class="btn-sm">Edit product</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Active?">
+    <input type="checkbox" class="checkbox" disabled checked={@product.active}>
+  </:item>
+  <:item title="Name"><%= @product.name %></:item>
+  <:item title="Label"><%= @product.label %></:item>
+  <:item title="Reference"><%= @product.reference %></:item>
+  <:item title="Type"><%= @product.type %></:item>
+  <:item title="Unit Price"><%= @product.unitprice %></:item>
+  <:item title="Unit of Measure"><%= @uom.label %> (<%= @uom.name %>)</:item>
+  <:item title="Sale Taxes">
+    <%= for tax <- @saletaxes do %>
+      <span class="badge badge-primary"><%= tax.name %></span>
+      
+    <% end %>
+  </:item>
+  <:item title="Purchase Taxes">
+    <%= for tax <- @purchasetaxes do %>
+      <span class="badge badge-secondary"><%= tax.name %></span>
+    <% end %>
+  </:item>
+  <:item :if={@product.note != nil and @product.note != ''} title="Note"><%= @product.note %></:item>
+</.list>
+
+<.modal :if={@live_action == :edit} id="product-modal" show on_cancel={JS.patch(~p"/products/#{@product}")}>
+  <.live_component
+    module={InvoicerWeb.ProductLive.FormComponent}
+    id={@product.id}
+    title={@page_title}
+    action={@live_action}
+    product={@product}
+    navigate={~p"/products/#{@product}"}
+  />
+</.modal>
