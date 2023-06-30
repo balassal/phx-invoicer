@@ -32,6 +32,9 @@ defmodule InvoicerWeb.Router do
 
     live "/products/:id", ProductLive.Show, :show
     live "/products/:id/show/edit", ProductLive.Show, :edit
+
+    live "/invoices", InvoiceLive.Index, :index
+    live "/invoices/new", InvoiceLive.Edit, :new
   end
 
   scope "/settings", InvoicerWeb do

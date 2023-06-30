@@ -1,0 +1,14 @@
+<.header>
+  Listing Invoices
+  <:actions>
+    <.link navigate={~p"/invoices/new"}>
+      <.button class="btn-sm">
+        New
+      </.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table id="invoices" rows={@invoices}>
+  <:col :let={invoice} label="Name"><%= invoice.name %></:col>
+</.table>

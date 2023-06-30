@@ -1,0 +1,87 @@
+<.header>
+  <%= @page_title %>
+</.header>
+
+<div class="pr-2 mt-4">
+<.simple_form
+  :let={f}
+  for={@changeset}
+  id="invoice-form"
+  phx-change="validate"
+  phx-submit="save"
+>
+  <div class="flex items-center justify-between">
+    <h3 class="text-xl italic"><%= @invoice.name %></h3>
+    <.button class="btn-sm" phx-disable-with="Saving...">Create Invoice</.button>
+  </div>
+  <div class="grid grid-cols-2 gap-4">
+    <div class="card bg-gray-100 shadow-xl">
+      <div class="card-body px-3 py-2">
+        <.input field={{f, :partner_id}} type="select" label="Partner" options={@partners} />
+        <.input :if={length(@bank_accounts) > 0} field={{f, :bank_account_id}} type="select" label="Bank" options={@bank_accounts} />
+        <div class="grid grid-cols-2 gap-2">
+          <.input field={{f, :currency_id}} type="select" label="Currency" options={@currencies} />
+          <.input field={{f, :exchange_rate}} type="number" label="Rate" step="any" />
+        </div>
+      </div>
+    </div>
+    <div class="card bg-gray-100 shadow-xl">
+      <div class="card-body px-3 py-2">
+        <.input field={{f, :date}} type="date" label="Date" />
+        <.input field={{f, :delivery_date}} type="date" label="Delivery Date" />
+        <.input field={{f, :payment_term}} type="number" label="Payment Term" step="1" min="0" />
+        <.input field={{f, :due_date}} type="date" label="Due Date" />
+        <.input field={{f, :payment_method}} type="select" label="Payment Method" options={["transfer", "credit", "card", "cash", "voucher"]} />
+      </div>
+    </div>
+  </div>
+  <div class="card bg-orange-50 shadow-xl py-2 px-4">
+    Invoice Lines
+    <div class="card-body py-2 px-0">
+      <%= for line <- Phoenix.HTML.Form.inputs_for(f, :invoice_lines) do %>
+        <div class="flex flex-wrap gap-4 items-end">
+          <div class="w-52">
+            <.input field={{line, :product_id}} type="select" label="Product" options={@products} />
+          </div>
+          <div class="grow">
+            <.input field={{line, :label}} type="text" label="Label" />
+          </div>
+          <div class="grow">
+            <.input field={{line, :quantity}} type="number" label="Quantity" step="0.01" />
+          </div>
+          <div class="grow">
+            <.input field={{line, :uom_id}} type="select" label="Unit of Measure" options={@uoms} />
+          </div>
+          <div class="grow">
+            <.input field={{line, :unit_price}} type="number" label="Unit Price" step="any" />
+          </div>
+          <div class="grow">
+            <.input field={{line, :amount}} type="number" label="Amount" step="any" disabled />
+          </div>
+          <div class="grow">
+            <.input field={{line, :tax_ids}} type="select" label="Taxes" multiple options={@taxes} />
+          </div>
+          <div class="grow">
+            <.input field={{line, :tax_amount}} type="number" label="Tax Amount" step="any" disabled />
+          </div>
+          <div class="grow">
+            <.input field={{line, :total}} type="number" label="Total" step="any" disabled />
+          </div>
+          <div class="grow">
+            <%= if is_nil({line, :temp_id}) do %>
+              <.input field={{line, :delete}} type="checkbox" />
+            <% else %>
+              <.button type="button" class="btn-ghost" phx-click="remove-line" phx-value-index={line.data.temp_id}>
+                <Heroicons.trash solid class="h-5 w-5 text-red-600" />
+              </.button>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <div class="card-actions">
+      <.button class="btn-sm" type="button" phx-click="add-line">Add Line</.button>
+    </div>
+  </div>
+</.simple_form>
+</div>
